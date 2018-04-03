@@ -23,6 +23,7 @@ body {
     .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
     .then(audioBuffer => {
       playButton.disabled = false;
+      audioBuffer.loop = true;
       buffer = audioBuffer;
     });
     
