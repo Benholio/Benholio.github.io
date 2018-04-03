@@ -23,7 +23,6 @@ body {
     .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
     .then(audioBuffer => {
       playButton.disabled = false;
-      audioBuffer.loop = true;
       buffer = audioBuffer;
     });
     
@@ -33,6 +32,7 @@ body {
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
+    source.loop = true;
     source.start();
   }
 }());
