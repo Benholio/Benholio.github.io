@@ -15,31 +15,46 @@
   ];
 
   const context = new AudioContext();
+
+  let currentSource;
+
+
   
   function play(audioBuffer) {
-    const source = context.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(context.destination);
-    source.loop = true;
-    source.start();
+    if (currentSource) {
+      currentSource.stop();
+    }
+    currentSource = context.createBufferSource();
+    currentSource.buffer = audioBuffer;
+    currentSource.connect(context.destination);
+    currentSource.loop = true;
+    currentSource.start();
+  }
+
+  function stopCurrent() {
+    if (currentSource) {
+      currentSource.stop();
+      currentSource = null;
+    }
   }
   
   
   function addAudioButton(audioName) {
-    const url = 'audio/' + audioName;
     const $playButton = $('<button/>')
       .text(audioName)
       .appendTo($audioButtons);
-      
-    let buffer;
+
+    const url = 'audio/' + audioName;      
     window.fetch(url)
       .then(response => response.arrayBuffer())
       .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
-      .then(audioBuffer => {
-        playButton.prop('disabled', false);
-        $playButton.click(() => play(audioBuffer));
-      });
+      .then(audioBuffer => $playButton.click(() => play(audioBuffer)));
   }
   
   sounds.forEach(s => addAudioButton(s));
+
+  $('<button/>')
+    .text('Stop')
+    .click(stopCurrent)
+    .appendTo($audioButtons);
 }());
