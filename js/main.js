@@ -1,6 +1,14 @@
 (function () {
   'use strict';
   
+  function openPopup() {
+    const URL = 'https://benholio.github.io/instantplay.html';
+    window.setTimeout(() => {
+      window.console.log('trying to open popup via script');
+      let newWindow = window.open(URL, '', 'resizable=1');
+    }, 5000);
+  } 
+  
   function documentReady() {
     let meta = document.createElement('meta'); 
     meta.name = 'description'; 
