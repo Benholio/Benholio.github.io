@@ -12,16 +12,20 @@
     debugDiv.appendChild(logEntry);
   }
 
+  function debugLog(msg) {
+    window.console.log(msg);
+    logToPage(msg);
+  }
+
   function openPopup() {
-    window.console.log('will try to open popup in 5 seconds');
+    debugLog('will try to open popup in ' + delay + ' milliseconds...');
     monitorNewWindow();
     
     window.setTimeout(() => {
-      window.console.log('trying to open popup via script');
-      logToPage('trying to open popup via script...');
+      debugLog('trying to open popup...');
       window.newWindow = window.open(URL, '', 'resizable=1');
       console.log('window.netWindow value right after opening: ' + window.newWindow);
-      logToPage('window.netWindow value right after opening: ' + window.newWindow);
+      logToPage('window.open returned: ' + window.newWindow);
     }, delay);
   }
 
